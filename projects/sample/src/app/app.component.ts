@@ -12,7 +12,7 @@ import { of, race } from 'rxjs';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'flight-app',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
 })
 export class AppComponent {
   constructor(private router: Router, private oauthService: OAuthService) {
@@ -35,7 +35,6 @@ export class AppComponent {
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
 
-
     // Optional
     this.oauthService.setupAutomaticSilentRefresh();
 
@@ -44,18 +43,14 @@ export class AppComponent {
       console.debug('oauth/oidc event', e);
     });
 
-    this.oauthService.events
-      .pipe(filter(e => e.type === 'session_terminated'))
-      .subscribe(e => {
-        // tslint:disable-next-line:no-console
-        console.debug('Your session has been terminated!');
-      });
+    this.oauthService.events.pipe(filter(e => e.type === 'session_terminated')).subscribe(e => {
+      // tslint:disable-next-line:no-console
+      console.debug('Your session has been terminated!');
+    });
 
-    this.oauthService.events
-      .pipe(filter(e => e.type === 'token_received'))
-      .subscribe(e => {
-        // this.oauthService.loadUserProfile();
-      });
+    this.oauthService.events.pipe(filter(e => e.type === 'token_received')).subscribe(e => {
+      // this.oauthService.loadUserProfile();
+    });
   }
 
   private configureAuth() {
@@ -67,19 +62,17 @@ export class AppComponent {
     this.oauthService.redirectUri = window.location.origin + '/index.html';
 
     // URL of the SPA to redirect the user after silent refresh
-    this.oauthService.silentRefreshRedirectUri =
-      window.location.origin + '/silent-refresh.html';
+    this.oauthService.silentRefreshRedirectUri = window.location.origin + '/silent-refresh.html';
 
     // The SPA's id. The SPA is registerd with this id at the auth-server
-    this.oauthService.clientId = 'spa-demo';
+    this.oauthService.clientId = 'is360ui';
 
     // set the scope for the permissions the client should request
     // The first three are defined by OIDC. The 4th is a usecase-specific one
     this.oauthService.scope = 'openid profile email voucher';
 
     // Url of the Identity Provider
-    this.oauthService.issuer =
-      'https://steyer-identity-server.azurewebsites.net/identity';
+    this.oauthService.issuer = 'https://myroute-is360.a3c1.starter-us-west-1.openshiftapps.com/auth/realms/is360';
 
     this.oauthService.tokenValidationHandler = new NullValidationHandler();
 
@@ -93,13 +86,11 @@ export class AppComponent {
       this.oauthService.tryLogin();
     });
 
-    this.oauthService.events
-      .pipe(filter(e => e.type === 'token_expires'))
-      .subscribe(e => {
-        // tslint:disable-next-line:no-console
-        console.debug('received token_expires event', e);
-        this.oauthService.silentRefresh();
-      });
+    this.oauthService.events.pipe(filter(e => e.type === 'token_expires')).subscribe(e => {
+      // tslint:disable-next-line:no-console
+      console.debug('received token_expires event', e);
+      this.oauthService.silentRefresh();
+    });
   }
 
   private configurePasswordFlow() {

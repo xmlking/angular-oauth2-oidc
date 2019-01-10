@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-password-flow-login',
-  templateUrl: './password-flow-login.component.html'
+  templateUrl: './password-flow-login.component.html',
 })
 export class PasswordFlowLoginComponent implements OnInit {
   userName: string;
@@ -49,10 +49,7 @@ export class PasswordFlowLoginComponent implements OnInit {
 
   loginWithPassword() {
     this.oauthService
-      .fetchTokenUsingPasswordFlowAndLoadUserProfile(
-        this.userName,
-        this.password
-      )
+      .fetchTokenUsingPasswordFlowAndLoadUserProfile(this.userName, this.password)
       .then(() => {
         console.debug('successfully logged in');
         this.loginFailed = false;

@@ -8,33 +8,33 @@ let APP_ROUTES: Routes = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
   },
   {
     path: 'password-flow-login',
-    component: PasswordFlowLoginComponent
+    component: PasswordFlowLoginComponent,
   },
   {
     path: 'flight-booking',
-    loadChildren: './flight-booking/flight-booking.module#FlightBookingModule'
+    loadChildren: './flight-booking/flight-booking.module#FlightBookingModule',
   },
   {
     path: 'history',
     component: FlightHistoryComponent,
-    outlet: 'aux'
+    outlet: 'aux',
   },
   {
     path: '**',
-    redirectTo: 'home'
-  }
+    redirectTo: 'home',
+  },
 ];
 
 export let AppRouterModule = RouterModule.forRoot(APP_ROUTES, {
-  preloadingStrategy: CustomPreloadingStrategy
+  preloadingStrategy: CustomPreloadingStrategy,
   // useHash: true,
   // initialNavigation: false
 });

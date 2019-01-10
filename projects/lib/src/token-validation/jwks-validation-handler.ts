@@ -1,7 +1,4 @@
-import {
-  AbstractValidationHandler,
-  ValidationParams
-} from './validation-handler';
+import { AbstractValidationHandler, ValidationParams } from './validation-handler';
 
 // declare var require: any;
 // let rs = require('jsrsasign');
@@ -29,7 +26,7 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     'ES384',
     'PS256',
     'PS384',
-    'PS512'
+    'PS512',
   ];
 
   /**
@@ -39,34 +36,33 @@ export class JwksValidationHandler extends AbstractValidationHandler {
   gracePeriodInSec = 600;
 
   validateSignature(params: ValidationParams, retry = false): Promise<any> {
-    if (!params.idToken) throw new Error('Parameter idToken expected!');
-    if (!params.idTokenHeader)
+    if (!params.idToken) {
+      throw new Error('Parameter idToken expected!');
+    }
+    if (!params.idTokenHeader) {
       throw new Error('Parameter idTokenHandler expected.');
-    if (!params.jwks) throw new Error('Parameter jwks expected!');
+    }
+    if (!params.jwks) {
+      throw new Error('Parameter jwks expected!');
+    }
 
-    if (
-      !params.jwks['keys'] ||
-      !Array.isArray(params.jwks['keys']) ||
-      params.jwks['keys'].length === 0
-    ) {
+    if (!params.jwks['keys'] || !Array.isArray(params.jwks['keys']) || params.jwks['keys'].length === 0) {
       throw new Error('Array keys in jwks missing!');
     }
 
     // console.debug('validateSignature: retry', retry);
 
-    let kid: string = params.idTokenHeader['kid'];
-    let keys: object[] = params.jwks['keys'];
+    const kid: string = params.idTokenHeader['kid'];
+    const keys: object[] = params.jwks['keys'];
     let key: object;
 
-    let alg = params.idTokenHeader['alg'];
+    const alg = params.idTokenHeader['alg'];
 
     if (kid) {
       key = keys.find(k => k['kid'] === kid /* && k['use'] === 'sig' */);
     } else {
-      let kty = this.alg2kty(alg);
-      let matchingKeys = keys.filter(
-        k => k['kty'] === kty && k['use'] === 'sig'
-      );
+      const kty = this.alg2kty(alg);
+      const matchingKeys = keys.filter(k => k['kty'] === kty && k['use'] === 'sig');
 
       /*
             if (matchingKeys.length == 0) {
@@ -75,8 +71,7 @@ export class JwksValidationHandler extends AbstractValidationHandler {
                 return Promise.reject(error);
             }*/
       if (matchingKeys.length > 1) {
-        let error =
-          'More than one matching key found. Please specify a kid in the id_token header.';
+        const error = 'More than one matching key found. Please specify a kid in the id_token header.';
         console.error(error);
         return Promise.reject(error);
       } else if (matchingKeys.length === 1) {
@@ -112,13 +107,9 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     let keyObj = rs.KEYUTIL.getKey(key);
     let validationOptions = {
       alg: this.allowedAlgorithms,
-      gracePeriod: this.gracePeriodInSec
+      gracePeriod: this.gracePeriodInSec,
     };
-    let isValid = rs.KJUR.jws.JWS.verifyJWT(
-      params.idToken,
-      keyObj,
-      validationOptions
-    );
+    let isValid = rs.KJUR.jws.JWS.verifyJWT(params.idToken, keyObj, validationOptions);
 
     if (isValid) {
       return Promise.resolve();

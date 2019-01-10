@@ -6,7 +6,5 @@
     "languageLevel": ["dom", "es2017"],
     "entryFile": "src/public_api.ts"
   },
-  "whitelistedNonPeerDependencies": [
-    "jsrsasign"
-  ] 
+  "whitelistedNonPeerDependencies": ["jsrsasign", "js-sha256"]
 }

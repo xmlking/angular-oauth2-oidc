@@ -9,7 +9,7 @@ import { UrlHelperService } from './url-helper.service';
 import { OAuthModuleConfig } from './oauth-module.config';
 import {
   OAuthResourceServerErrorHandler,
-  OAuthNoopResourceServerErrorHandler
+  OAuthNoopResourceServerErrorHandler,
 } from './interceptors/resource-server-error-handler';
 import { DefaultOAuthInterceptor } from './interceptors/default-oauth.interceptor';
 import { ValidationHandler } from './token-validation/validation-handler';
@@ -19,12 +19,12 @@ import { createDefaultLogger, createDefaultStorage } from './factories';
 @NgModule({
   imports: [CommonModule],
   declarations: [],
-  exports: []
+  exports: [],
 })
 export class OAuthModule {
   static forRoot(
     config: OAuthModuleConfig = null,
-    validationHandlerClass = NullValidationHandler
+    validationHandlerClass = NullValidationHandler,
   ): ModuleWithProviders {
     return {
       ngModule: OAuthModule,
@@ -33,18 +33,18 @@ export class OAuthModule {
         UrlHelperService,
         { provide: OAuthLogger, useFactory: createDefaultLogger },
         { provide: OAuthStorage, useFactory: createDefaultStorage },
-        { provide: ValidationHandler, useClass: validationHandlerClass},
+        { provide: ValidationHandler, useClass: validationHandlerClass },
         {
           provide: OAuthResourceServerErrorHandler,
-          useClass: OAuthNoopResourceServerErrorHandler
+          useClass: OAuthNoopResourceServerErrorHandler,
         },
         { provide: OAuthModuleConfig, useValue: config },
         {
           provide: HTTP_INTERCEPTORS,
           useClass: DefaultOAuthInterceptor,
-          multi: true
-        }
-      ]
+          multi: true,
+        },
+      ],
     };
   }
 }

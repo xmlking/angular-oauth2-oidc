@@ -24,7 +24,7 @@ export class AuthConfig {
   /**
    * The requested scopes
    */
-  public scope? = 'openid profile';
+  public scope? = 'openid profile offline_access';
 
   public resource? = '';
 
@@ -70,6 +70,8 @@ export class AuthConfig {
   public userinfoEndpoint?: string = null;
 
   public responseType? = '';
+  // public responseType? = 'token';
+  // public responseType? = 'code';
 
   /**
    * Defines whether additional debug information should
@@ -77,7 +79,7 @@ export class AuthConfig {
    * the verbosity of the console needs to be explicitly set
    * to include Debug level messages.
    */
-   public showDebugInformation? = false;
+  public showDebugInformation? = false;
 
   /**
    * The redirect uri used when doing silent refresh.
@@ -216,6 +218,8 @@ export class AuthConfig {
    */
   public useHttpBasicAuthForPasswordFlow? = false;
 
+  public disableNonceCheck? = false;
+
   constructor(json?: Partial<AuthConfig>) {
     if (json) {
       Object.assign(this, json);
@@ -229,5 +233,5 @@ export class AuthConfig {
    */
   public openUri?: ((uri: string) => void) = uri => {
     location.href = uri;
-  }
+  };
 }

@@ -1,4 +1,4 @@
-# angular-oauth2-oidc
+# angular-oauth2-oidc-all
 
 Support for OAuth 2 and OpenId Connect (OIDC) in Angular.
 
@@ -67,7 +67,7 @@ Username/Password: max/geheim
 ## Installing
 
 ```
-npm i angular-oauth2-oidc --save
+npm i @xmlking/angular-oauth2-oidc-all --save
 ```
 
 ## Importing the NgModule

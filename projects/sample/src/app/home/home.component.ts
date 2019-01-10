@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
   loginFailed: boolean = false;
@@ -32,6 +32,10 @@ export class HomeComponent implements OnInit {
     // the parameter here is optional. It's passed around and can be used after logging in
   }
 
+  authCodeLogin() {
+    this.oauthService.initAuthorizationCodeFlow();
+  }
+
   logout() {
     this.oauthService.logOut();
   }
@@ -54,9 +58,9 @@ export class HomeComponent implements OnInit {
 
   testSilentRefresh() {
     /*
-         * Tweak config for implicit flow.
-         * This is needed b/c this sample uses both flows
-        */
+     * Tweak config for implicit flow.
+     * This is needed b/c this sample uses both flows
+     */
     //this.oauthService.clientId = "spa-demo";
     this.oauthService.oidc = true;
 
@@ -64,6 +68,20 @@ export class HomeComponent implements OnInit {
       .silentRefresh()
       .then(info => console.debug('refresh ok', info))
       .catch(err => console.error('refresh error', err));
+  }
+
+  requestAccessTokenWithRefreshToken() {
+    /*
+     * Tweak config for implicit flow.
+     * This is needed b/c this sample uses both flows
+     */
+    //this.oauthService.clientId = "spa-demo";
+    this.oauthService.oidc = true;
+
+    this.oauthService
+      .refreshToken()
+      .then(info => console.debug('refresh token ok', info))
+      .catch(err => console.error('refresh token error', err));
   }
 
   set requestAccessToken(value: boolean) {
@@ -81,6 +99,10 @@ export class HomeComponent implements OnInit {
 
   get access_token() {
     return this.oauthService.getAccessToken();
+  }
+
+  get refresh_token() {
+    return this.oauthService.getRefreshToken();
   }
 
   get id_token_expiration() {

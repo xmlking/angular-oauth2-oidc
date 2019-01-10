@@ -15,9 +15,7 @@ export abstract class ValidationHandler {
   /**
    * Validates the signature of an id_token.
    */
-  public abstract validateSignature(
-    validationParams: ValidationParams
-  ): Promise<any>;
+  public abstract validateSignature(validationParams: ValidationParams): Promise<any>;
 
   /**
    * Validates the at_hash in an id_token against the received access_token.
@@ -40,19 +38,19 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
    * Validates the at_hash in an id_token against the received access_token.
    */
   async validateAtHash(params: ValidationParams): Promise<boolean> {
-    let hashAlg = this.inferHashAlgorithm(params.idTokenHeader);
+    const hashAlg = this.inferHashAlgorithm(params.idTokenHeader);
 
-    let tokenHash = await this.calcHash(params.accessToken, hashAlg); // sha256(accessToken, { asString: true });
+    const tokenHash = await this.calcHash(params.accessToken, hashAlg); // sha256(accessToken, { asString: true });
 
-    let leftMostHalf = tokenHash.substr(0, tokenHash.length / 2);
+    const leftMostHalf = tokenHash.substr(0, tokenHash.length / 2);
 
-    let tokenHashBase64 = btoa(leftMostHalf);
+    const tokenHashBase64 = btoa(leftMostHalf);
 
-    let atHash = tokenHashBase64
+    const atHash = tokenHashBase64
       .replace(/\+/g, '-')
       .replace(/\//g, '_')
       .replace(/=/g, '');
-    let claimsAtHash = params.idTokenClaims['at_hash'].replace(/=/g, '');
+    const claimsAtHash = params.idTokenClaims['at_hash'].replace(/=/g, '');
 
     if (atHash !== claimsAtHash) {
       console.error('exptected at_hash: ' + atHash);
@@ -70,7 +68,7 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
    */
   protected inferHashAlgorithm(jwtHeader: object): string {
     let alg: string = jwtHeader['alg'];
-    
+
     if (!alg.match(/^.S[0-9]{3}$/)) {
       throw new Error('Algorithm not supported: ' + alg);
     }

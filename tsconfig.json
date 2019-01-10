@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "importHelpers": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -20,12 +21,10 @@
       "sample": [
         "dist/sample"
       ],
-      
-      // "angular-oauth2-oidc": [
-      //   "projects/lib/src/public_api"
-      //   //"dist/lib"
-      // ]
-      
+       "angular-oauth2-oidc": [
+         "projects/lib/src/public_api"
+         //"dist/lib"
+       ]
     }
   }
 }
