@@ -7,7 +7,7 @@ const baseUrl = (base && base.href) || window.location.origin + '/';
 
 export const authConfig: AuthConfig = {
   // Url of the Identity Provider
-  issuer: 'https://myroute-is360.a3c1.starter-us-west-1.openshiftapps.com/auth/realms/is360',
+  issuer: 'https://keycloak-ngx.1d35.starter-us-east-1.openshiftapps.com/auth/realms/ngx',
 
   // URL of the SPA to redirect the user to after login
   redirectUri: baseUrl + 'home',
@@ -16,7 +16,7 @@ export const authConfig: AuthConfig = {
   silentRefreshRedirectUri: baseUrl + +'silent-refresh.html',
 
   // The SPA's id. The SPA is registerd with this id at the auth-server
-  clientId: 'is360ui',
+  clientId: 'ngxapp',
 
   // set the scope for the permissions the client should request
   // The first three are defined by OIDC. The 4th is a usecase-specific one
@@ -34,4 +34,6 @@ export const authConfig: AuthConfig = {
   oidc: true,
 
   useIdTokenHintForSilentRefresh: true,
+  skipIssuerCheck: true,
+  strictDiscoveryDocumentValidation: false
 };

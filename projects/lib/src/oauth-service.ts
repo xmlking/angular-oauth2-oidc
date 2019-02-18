@@ -1089,19 +1089,9 @@ export class OAuthService extends AuthConfig {
     localStorage.removeItem('verifier');
     let arr = new Uint8Array(32);
     // var arr = new Uint8Array(this.getValues());
-
     arr = window.crypto.getRandomValues(arr);
-    console.log('randomValues=' + arr);
-
     const ver = this.base64ToBase64Url(this.bufferToBase64(arr));
-    console.log('verifier=' + ver);
-    console.log('sha256 of verifier=' + sha256(ver));
-    // ver = 'dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk';
-
     const challenge = this.base64ToBase64Url(this.hexToBase64(sha256(ver)));
-    console.log('challenge=' + challenge);
-    // this.challenge = 'E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM';
-
     localStorage.setItem('verifier', ver);
     return challenge;
   }
