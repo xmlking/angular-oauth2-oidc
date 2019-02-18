@@ -65,14 +65,14 @@ export class AppComponent {
     this.oauthService.silentRefreshRedirectUri = window.location.origin + '/silent-refresh.html';
 
     // The SPA's id. The SPA is registerd with this id at the auth-server
-    this.oauthService.clientId = 'is360ui';
+    this.oauthService.clientId = 'ngx';
 
     // set the scope for the permissions the client should request
     // The first three are defined by OIDC. The 4th is a usecase-specific one
     this.oauthService.scope = 'openid profile email voucher';
 
     // Url of the Identity Provider
-    this.oauthService.issuer = 'https://myroute-is360.a3c1.starter-us-west-1.openshiftapps.com/auth/realms/is360';
+    this.oauthService.issuer = 'https://keycloak-ngx.1d35.starter-us-east-1.openshiftapps.com/auth/realms/ngx';
 
     this.oauthService.tokenValidationHandler = new NullValidationHandler();
 

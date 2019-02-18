@@ -1260,6 +1260,9 @@ export class OAuthService extends AuthConfig {
       return new Promise((resolve, reject) => {
         this.getTokenFromCode(code)
           .then(result => {
+            if (this.clearHashAfterLogin) {
+              history.pushState(null, '', location.href.split('?')[0]);
+            }
             resolve(true);
           })
           .catch(err => {
@@ -1385,6 +1388,7 @@ export class OAuthService extends AuthConfig {
         this.storeIdToken(result);
         this.storeSessionState(sessionState);
         if (this.clearHashAfterLogin) {
+          console.log(222, location.hash);
           location.hash = '';
         }
         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
