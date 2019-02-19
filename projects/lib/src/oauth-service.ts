@@ -1812,13 +1812,16 @@ export class OAuthService extends AuthConfig {
    * Get token using an intermediate code. Works for the Authorization Code flow.
    */
   private getTokenFromCode(code: string): Promise<object> {
-    const params = new HttpParams()
+    let params = new HttpParams()
       .set('grant_type', 'authorization_code')
       .set('code', code)
       .set('client_id', this.clientId)
       // .set('client_secret', 'secret')
       .set('redirect_uri', this.redirectUri)
       .set('code_verifier', localStorage.getItem('verifier'));
+    if (this.dummyClientSecret) {
+      params = params.set('client_secret', this.dummyClientSecret);
+    }
     return this.fetchToken(params);
   }
 

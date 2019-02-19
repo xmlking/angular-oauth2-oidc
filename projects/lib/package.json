@@ -4,7 +4,7 @@
   "author": {
     "name": "Sumanth Chinthagunta"
   },
-  "version": "5.2.0",
+  "version": "5.2.1",
   "repository": "xmlking/angular-oauth2-oidc-all",
   "dependencies": {
     "jsrsasign": "^8.0.12",
