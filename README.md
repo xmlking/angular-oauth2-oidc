@@ -1,5 +1,7 @@
 # angular-oauth2-oidc-all
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/xmlking/angular-oauth2-oidc-all.svg)](https://greenkeeper.io/)
+
 Support for OAuth 2 and OpenId Connect (OIDC) in Angular.
 
 ![OIDC Certified Logo](https://raw.githubusercontent.com/manfredsteyer/angular-oauth2-oidc/master/oidc.png)
