@@ -1102,6 +1102,7 @@ export class OAuthService extends AuthConfig {
     }
 
     this.inImplicitFlow = true;
+    this.pkceFlow = false;
 
     if (!this.validateUrlForHttps(this.loginUrl)) {
       throw new Error('loginUrl must use http, or config value for property requireHttps must allow http');
@@ -1258,7 +1259,7 @@ export class OAuthService extends AuthConfig {
 
     if (code) {
       return new Promise((resolve, reject) => {
-        this.getTokenFromCode(code)
+        this.getTokenFromCode(decodeURIComponent(code))
           .then(result => {
             if (this.clearHashAfterLogin) {
               history.pushState(null, '', location.href.split('?')[0]);
@@ -1388,7 +1389,6 @@ export class OAuthService extends AuthConfig {
         this.storeIdToken(result);
         this.storeSessionState(sessionState);
         if (this.clearHashAfterLogin) {
-          console.log(222, location.hash);
           location.hash = '';
         }
         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
